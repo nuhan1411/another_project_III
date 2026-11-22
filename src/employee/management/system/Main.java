@@ -4,74 +4,90 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 @SuppressWarnings("ALL")
 public class Main extends JFrame {
 
-    Main(){
+    Main() {
+        setTitle("Employee Management System - Dashboard");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/home.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(1120,630, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel img = new JLabel(i3);
-        img.setBounds(0,0,1120,630);
-        add(img);
-
+        URL homeImgUrl = ClassLoader.getSystemResource("icons/home.jpg");
+        JLabel img;
+        if (homeImgUrl != null) {
+            ImageIcon i1 = new ImageIcon(homeImgUrl);
+            Image i2 = i1.getImage().getScaledInstance(1120, 630, Image.SCALE_DEFAULT);
+            ImageIcon i3 = new ImageIcon(i2);
+            img = new JLabel(i3);
+            img.setBounds(0, 0, 1120, 630);
+            add(img);
+        } else {
+            img = new JLabel();
+            img.setBounds(0, 0, 1120, 630);
+            img.setBackground(new Color(240, 240, 240));
+            img.setOpaque(true);
+            add(img);
+        }
 
         JLabel heading = new JLabel("Employee Management System");
-        heading.setBounds(340,155,400,40);
-        heading.setFont(new Font("Raleway",Font.BOLD,25));
+        heading.setBounds(340, 155, 450, 40);
+        heading.setFont(new Font("Raleway", Font.BOLD, 25));
         img.add(heading);
 
-
-        JButton add = new JButton("Add Employee");
-        add.setBounds(335,270,150,40);
-        add.setForeground(Color.WHITE);
-        add.setBackground(Color.BLACK);
-        add.addActionListener(new ActionListener() {
+        JButton addBtn = new JButton("Add Employee");
+        addBtn.setBounds(335, 270, 160, 40);
+        addBtn.setForeground(Color.WHITE);
+        addBtn.setBackground(Color.BLACK);
+        addBtn.setFocusPainted(false);
+        addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
                 new AddEmployee();
-                setVisible(false);
             }
         });
-        img.add(add);
+        img.add(addBtn);
 
-
-        JButton view = new JButton("View Employee");
-        view.setBounds(565,270,150,40);
-        view.setForeground(Color.WHITE);
-        view.setBackground(Color.BLACK);
-        view.addActionListener(new ActionListener() {
+        JButton viewBtn = new JButton("View Employee");
+        viewBtn.setBounds(565, 270, 160, 40);
+        viewBtn.setForeground(Color.WHITE);
+        viewBtn.setBackground(Color.BLACK);
+        viewBtn.setFocusPainted(false);
+        viewBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
                 new ViewEmployee();
-                setVisible(false);
             }
         });
-        img.add(view);
+        img.add(viewBtn);
 
-
-        JButton rem = new JButton("Remove Employee");
-        rem.setBounds(440,370,150,40);
-        rem.setForeground(Color.WHITE);
-        rem.setBackground(Color.BLACK);
-        rem.addActionListener(new ActionListener() {
+        JButton remBtn = new JButton("Remove Employee");
+        remBtn.setBounds(440, 370, 160, 40);
+        remBtn.setForeground(Color.WHITE);
+        remBtn.setBackground(Color.BLACK);
+        remBtn.setFocusPainted(false);
+        remBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
                 new RemoveEmployee();
             }
         });
-        img.add(rem);
+        img.add(remBtn);
 
-
-        setSize(1120,630);
-        setLocation(250,100);
+        setSize(1120, 630);
         setLayout(null);
+        setLocationRelativeTo(null); // Center on screen
         setVisible(true);
     }
 
     public static void main(String[] args) {
-        new Main();
+        SwingUtilities.invokeLater(() -> new Main());
     }
 }
